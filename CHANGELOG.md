@@ -1,5 +1,9 @@
 # main
 
+# 3.0.2 / 25-03-2026
+
+* Fix the accidental inclusion of a sitemap XSL stylesheet within the sitemap itself
+
 # 3.0.1 / 24-12-2025
 
 * Remove uses of `.present?`
