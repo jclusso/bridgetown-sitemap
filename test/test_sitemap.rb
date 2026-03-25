@@ -41,6 +41,10 @@ class TestSitemap < BridgetownSitemap::Test
       refute_match %r!\ATHIS IS MY LAYOUT!, @robots
     end
 
+    it "does not include an XML stylesheet declaration" do
+      refute_match %r!xml-stylesheet!, @sitemap
+    end
+
     it "puts all the pages in the sitemap" do
       assert_match %r!<loc>https://example\.com/</loc>!, @sitemap
       assert_match %r!<loc>https://example\.com/some-subfolder/this-is-a-subpage/</loc>!, @sitemap
