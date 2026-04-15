@@ -1,5 +1,10 @@
 # main
 
+# 3.0.3 / 15-04-2026
+
+* Fix resource and generated page grouping for same-name pages in different paths
+* Cache git_repo? check at the class level
+
 # 3.0.2 / 25-03-2026
 
 * Fix the accidental inclusion of a sitemap XSL stylesheet within the sitemap itself
