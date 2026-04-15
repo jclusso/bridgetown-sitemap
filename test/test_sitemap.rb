@@ -242,6 +242,20 @@ class TestSitemap < BridgetownSitemap::Test
     end
   end
 
+  describe "GitInspector" do
+    it "caches the git_repo? check at the class level" do
+      BridgetownSitemap::GitInspector.remove_instance_variable(:@git_repo) if
+        BridgetownSitemap::GitInspector.instance_variable_defined?(:@git_repo)
+
+      result = BridgetownSitemap::GitInspector.git_repo?
+
+      assert BridgetownSitemap::GitInspector.instance_variable_defined?(:@git_repo),
+        "Expected git_repo? result to be cached on the class"
+      assert_equal result, BridgetownSitemap::GitInspector.git_repo?,
+        "Expected cached result to be returned on subsequent calls"
+    end
+  end
+
   describe "rendering the site with custom URLs" do
     before(:all) do
       prepare_site
