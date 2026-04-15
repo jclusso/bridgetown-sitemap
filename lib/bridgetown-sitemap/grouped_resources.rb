@@ -4,7 +4,10 @@ module BridgetownSitemap
   class GroupedResources
     def initialize(resources)
       @grouped_resources = resources.group_by do |resource|
-         [resource.data.slug, resource.date]
+        url = resource.relative_url.to_s
+        locale = resource.data.locale.to_s
+        base_url = locale.empty? ? url : url.sub("/#{locale}/", "/")
+        [base_url, resource.date]
       end.values
     end
 
