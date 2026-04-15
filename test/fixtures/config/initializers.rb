@@ -10,6 +10,7 @@ Bridgetown.configure do |config|
 
   available_locales [ :en, :ru ]
   default_locale :en
+  pagination { enabled true }
 
   init :"bridgetown-sitemap"
 end

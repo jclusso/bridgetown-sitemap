@@ -120,7 +120,26 @@ class TestSitemap < BridgetownSitemap::Test
     end
 
     it "includes the correct number of items for the sitemap" do
-      assert_equal 20, @sitemap.scan(%r!(?=<url>)!).count
+      assert_equal 22, @sitemap.scan(%r!(?=<url>)!).count
+    end
+
+    it "does not merge pages with the same slug but different paths" do
+      assert_match %r!<loc>https://example\.com/</loc>!, @sitemap
+      assert_match %r!<loc>https://example\.com/blog/</loc>!, @sitemap
+    end
+
+    it "does not merge generated pages with the same name but different paths" do
+      assert_match %r!<loc>https://example\.com/generated_page/</loc>!, @sitemap
+      assert_match %r!<loc>https://example\.com/alt/generated_page/</loc>!, @sitemap
+    end
+
+    it "collapses pagination pages with their original page" do
+      assert_match %r!<loc>https://example\.com/blog/</loc>!, @sitemap
+      refute_match %r!<loc>https://example\.com/blog/page/!, @sitemap
+    end
+
+    it "does not list pagination pages as hreflang alternates" do
+      refute_match %r!hreflang.*blog/page/!, @sitemap
     end
 
     it "includes generated pages in the sitemap" do
@@ -257,4 +276,5 @@ class TestSitemap < BridgetownSitemap::Test
       assert_match %r!<changefreq>weekly</changefreq>!, @sitemap
     end
   end
+
 end

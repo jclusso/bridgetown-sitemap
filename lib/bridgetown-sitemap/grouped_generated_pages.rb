@@ -3,8 +3,15 @@
 module BridgetownSitemap
   class GroupedGeneratedPages
     def initialize(generated_pages)
-      @grouped_generated_pages = \
-        generated_pages.group_by { |page| page.data.slug }.values
+      @grouped_generated_pages = generated_pages.group_by do |page|
+        url = if page.respond_to?(:original_resource) && page.original_resource
+          page.original_resource.relative_url.to_s
+        else
+          page.url.to_s
+        end
+        locale = page.data.locale.to_s
+        locale.empty? ? url : url.sub("/#{locale}/", "/")
+      end.values
     end
 
     def each(locale:, &block)

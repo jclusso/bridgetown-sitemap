@@ -10,8 +10,13 @@ class Builders::GeneratedPages < SiteBuilder
       generated_page_ru.data.layout = "default"
       generated_page_ru.data.locale = :ru
 
+      generated_page_alt = Bridgetown::GeneratedPage.new(site, site.source, "/alt", "generated_page.erb")
+      generated_page_alt.content = "<%= 'alt generated page'.capitalize %>"
+      generated_page_alt.data.layout = "default"
+
       site.generated_pages << generated_page
       site.generated_pages << generated_page_ru
+      site.generated_pages << generated_page_alt
     end
   end
 end
