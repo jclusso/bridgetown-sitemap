@@ -24,7 +24,13 @@ module BridgetownSitemap
       end
 
       def git_repo?
-        system "git status", out: File::NULL, err: File::NULL
+        self.class.git_repo?
+      end
+
+      def self.git_repo?
+        return @git_repo if defined?(@git_repo)
+
+        @git_repo = system("git rev-parse --is-inside-work-tree", out: File::NULL, err: File::NULL)
       end
 
       def cache
